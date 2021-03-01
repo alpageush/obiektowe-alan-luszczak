@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -604,7 +606,12 @@ public class okno extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
-        JOptionPane.showInputDialog("Wprowadź date w formacie dd mm yyyy");
+        String data = JOptionPane.showInputDialog("Wprowadź date w formacie dd mm yyyy");
+        
+        LocalDate ldnow = LocalDate.now();
+        LocalDate ld = LocalDate.parse(data, formatter);
+        
+        long days = ChronoUnit.DAYS.between(ld, ldnow);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void nineActionPerformed(java.awt.event.ActionEvent evt) {
