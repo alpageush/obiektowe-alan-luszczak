@@ -612,6 +612,8 @@ public class okno extends javax.swing.JFrame {
         LocalDate ld = LocalDate.parse(data, formatter);
         
         long days = ChronoUnit.DAYS.between(ld, ldnow);
+        
+        JOptionPane.showMessageDialog(rootPane, "Ilość dni od " + ld.toString() + ": " + days, "Przeliczanie dni", HEIGHT);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void nineActionPerformed(java.awt.event.ActionEvent evt) {
