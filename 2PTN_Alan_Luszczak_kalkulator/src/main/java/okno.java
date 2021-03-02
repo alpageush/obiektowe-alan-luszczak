@@ -607,6 +607,7 @@ public class okno extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
         String data = JOptionPane.showInputDialog("Wprowadź date w formacie dd mm yyyy");
+        if(data == null || data.length() > 10) return;
         
         LocalDate ldnow = LocalDate.now();
         LocalDate ld = LocalDate.parse(data, formatter);
