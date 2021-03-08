@@ -1,3 +1,6 @@
+
+import java.awt.event.KeyEvent;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -73,6 +76,18 @@ public class okno extends javax.swing.JFrame {
         label6.setText("Wydatki z dzisiaj:");
 
         label7.setText("Wydatki z tygodnia:");
+
+        textBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textBox1KeyPressed(evt);
+            }
+        });
+
+        textBox2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textBox2KeyTyped(evt);
+            }
+        });
 
         comboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -211,6 +226,19 @@ public class okno extends javax.swing.JFrame {
         dzisiejsze_zakupy.setText(dzisiejsze_zakupy.getText() + textBox1.getText() + " " + textBox2.getText() + " " + comboBox.getSelectedItem() + " " + textBox3.getText() + "\n");
     }//GEN-LAST:event_zapiszActionPerformed
 
+    private void textBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBox1KeyPressed
+        if(evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            dzisiejsze_zakupy.setText(textBox1.getText());
+        }
+    }//GEN-LAST:event_textBox1KeyPressed
+
+    private void textBox2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBox2KeyTyped
+        char ch = evt.getKeyChar();
+        if(ch == '0' || ch == '1' || ch == '2' || ch == '3' || ch == '4' || ch == '5' || ch == '6' || ch == '7' || ch == '8' || ch == '9') {
+            
+        }
+    }//GEN-LAST:event_textBox2KeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -245,6 +273,8 @@ public class okno extends javax.swing.JFrame {
             }
         });
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboBox;
