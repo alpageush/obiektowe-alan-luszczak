@@ -91,6 +91,12 @@ public class okno extends javax.swing.JFrame {
 
         comboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        textBox3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textBox3KeyTyped(evt);
+            }
+        });
+
         wydatki_dzisiaj.setEditable(false);
 
         wydatki_tydzien.setEditable(false);
@@ -234,10 +240,21 @@ public class okno extends javax.swing.JFrame {
 
     private void textBox2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBox2KeyTyped
         char ch = evt.getKeyChar();
-        if(ch == '0' || ch == '1' || ch == '2' || ch == '3' || ch == '4' || ch == '5' || ch == '6' || ch == '7' || ch == '8' || ch == '9') {
-            
+        if(ch >= 0 && ch <= 9 || ch == KeyEvent.VK_BACK_SPACE || ch == KeyEvent.VK_DELETE) {
+            textBox2.setEditable(true);
+        } else {
+            textBox2.setEditable(false);
         }
     }//GEN-LAST:event_textBox2KeyTyped
+
+    private void textBox3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBox3KeyTyped
+        char ch = evt.getKeyChar();
+        if(ch >= 0 && ch <= 9 || ch == KeyEvent.VK_BACK_SPACE || ch == KeyEvent.VK_DELETE || ch == KeyEvent.VK_SPACE) {
+            textBox2.setEditable(true);
+        } else {
+            textBox2.setEditable(false);
+        }
+    }//GEN-LAST:event_textBox3KeyTyped
 
     /**
      * @param args the command line arguments
