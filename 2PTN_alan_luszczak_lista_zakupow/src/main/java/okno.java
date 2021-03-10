@@ -78,8 +78,8 @@ public class okno extends javax.swing.JFrame {
         label7.setText("Wydatki z tygodnia:");
 
         textBox1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                textBox1KeyPressed(evt);
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textBox1KeyTyped(evt);
             }
         });
 
@@ -232,29 +232,23 @@ public class okno extends javax.swing.JFrame {
         dzisiejsze_zakupy.setText(dzisiejsze_zakupy.getText() + textBox1.getText() + " " + textBox2.getText() + " " + comboBox.getSelectedItem() + " " + textBox3.getText() + "\n");
     }//GEN-LAST:event_zapiszActionPerformed
 
-    private void textBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBox1KeyPressed
-        if(evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            dzisiejsze_zakupy.setText(textBox1.getText());
-        }
-    }//GEN-LAST:event_textBox1KeyPressed
-
     private void textBox2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBox2KeyTyped
         char ch = evt.getKeyChar();
-        if(ch >= 0 && ch <= 9 || ch == KeyEvent.VK_BACK_SPACE || ch == KeyEvent.VK_DELETE) {
-            textBox2.setEditable(true);
-        } else {
-            textBox2.setEditable(false);
-        }
+        if(ch >= '0' && ch <= '9' || ch== 32 ) textBox2.setEditable(true);
+        else textBox2.setEditable(false);
     }//GEN-LAST:event_textBox2KeyTyped
 
     private void textBox3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBox3KeyTyped
         char ch = evt.getKeyChar();
-        if(ch >= 0 && ch <= 9 || ch == KeyEvent.VK_BACK_SPACE || ch == KeyEvent.VK_DELETE || ch == KeyEvent.VK_SPACE) {
-            textBox2.setEditable(true);
-        } else {
-            textBox2.setEditable(false);
-        }
+        if(ch >= '0' && ch <= '9' || ch==KeyEvent.VK_BACK_SPACE || ch == 45) textBox3.setEditable(true);
+        else textBox3.setEditable(false);
     }//GEN-LAST:event_textBox3KeyTyped
+
+    private void textBox1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBox1KeyTyped
+        char ch = evt.getKeyChar();
+        if((ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || ch == 32 || ch == 8) textBox1.setEditable(true);
+        else textBox1.setEditable(false);
+    }//GEN-LAST:event_textBox1KeyTyped
 
     /**
      * @param args the command line arguments
