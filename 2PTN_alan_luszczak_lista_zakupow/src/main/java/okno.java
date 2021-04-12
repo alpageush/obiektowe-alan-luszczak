@@ -1,5 +1,11 @@
 
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,6 +25,7 @@ public class okno extends javax.swing.JFrame {
     public okno() {
         initComponents();
         this.setLocationRelativeTo(null);
+        addTooltipToElements();
     }
 
     /**
@@ -228,19 +235,26 @@ public class okno extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void zapiszActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zapiszActionPerformed
+    private void zapiszActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
         dzisiejsze_zakupy.setText(dzisiejsze_zakupy.getText() + textBox1.getText() + " " + textBox2.getText() + " " + comboBox.getSelectedItem() + " " + textBox3.getText() + "\n");
-    }//GEN-LAST:event_zapiszActionPerformed
+        SaveToFile stf = new SaveToFile();
+        String text = textBox1.getText()+";"+textBox2.getText()+";"+comboBox.getSelectedItem().toString()+";"+textBox3.getText();
+        stf.saveToFile(text);
+    }
 
     private void textBox2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBox2KeyTyped
         char ch = evt.getKeyChar();
-        if(ch >= '0' && ch <= '9' || ch== 32 ) textBox2.setEditable(true);
+        if((ch >= '0' && ch <= '9' || ch== 32) || !(textBox2.getText().contains(".") || textBox2.getText().contains(",")) || (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE || evt.getKeyCode() == KeyEvent.VK_DELETE)) textBox2.setEditable(true);
         else textBox2.setEditable(false);
     }//GEN-LAST:event_textBox2KeyTyped
 
     private void textBox3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBox3KeyTyped
+        String temp = textBox3.getText();
         char ch = evt.getKeyChar();
-        if(ch >= '0' && ch <= '9' || ch==KeyEvent.VK_BACK_SPACE || ch == 45) textBox3.setEditable(true);
+        if((ch >= '0' && ch <= '9' || ch==KeyEvent.VK_BACK_SPACE || ch == 45) && temp.length() < 10) {
+            textBox3.setEditable(true);
+            if((temp.length() == 4 || temp.length() == 7) && ch != KeyEvent.VK_BACK_SPACE) textBox3.setText(temp + "-");
+        }
         else textBox3.setEditable(false);
     }//GEN-LAST:event_textBox3KeyTyped
 
@@ -250,6 +264,13 @@ public class okno extends javax.swing.JFrame {
         else textBox1.setEditable(false);
     }//GEN-LAST:event_textBox1KeyTyped
 
+    private void addTooltipToElements() {
+        textBox1.setToolTipText("<html><h3>Wprowadz tekst</h3><br><p>Nie używaj polskich znaków!</p></html>");
+        textBox2.setToolTipText("<html><h3>Wprowadz wartosc produktu</h3></html>");
+        comboBox.setToolTipText("<html><h3>Wybierz typ towaru</h3></html>");
+        textBox3.setToolTipText("<html><h3>Wprowadz date zakupu w formacie YYYY-MM-DD</h3></html>");
+    }
+    
     /**
      * @param args the command line arguments
      */
