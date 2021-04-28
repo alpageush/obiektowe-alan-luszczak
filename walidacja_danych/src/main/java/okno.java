@@ -117,7 +117,7 @@ public class okno extends javax.swing.JFrame {
                     .addGroup(rejestracjaLayout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(rejestracjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(repass_textfield, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(repass_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, rejestracjaLayout.createSequentialGroup()
                                 .addComponent(repass_label)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -131,12 +131,12 @@ public class okno extends javax.swing.JFrame {
                                 .addComponent(login_label)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(warn_login))
-                            .addComponent(login_textfield, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(login_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, rejestracjaLayout.createSequentialGroup()
                                 .addComponent(pass_label)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(warn_pass))
-                            .addComponent(pass_textfield, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(pass_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(rejestracjaLayout.createSequentialGroup()
                         .addGap(143, 143, 143)
                         .addComponent(rejestracja_label)))
@@ -144,7 +144,7 @@ public class okno extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rejestracjaLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(200, 200, 200))
+                .addGap(202, 202, 202))
         );
         rejestracjaLayout.setVerticalGroup(
             rejestracjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,21 +155,21 @@ public class okno extends javax.swing.JFrame {
                 .addGroup(rejestracjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(login_label)
                     .addComponent(warn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(1, 1, 1)
                 .addComponent(login_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(rejestracjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(email_label)
                     .addComponent(warn_mail, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                .addGap(4, 4, 4)
                 .addComponent(email_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(rejestracjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(pass_label)
                     .addComponent(warn_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(1, 1, 1)
                 .addComponent(pass_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(4, 4, 4)
                 .addGroup(rejestracjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(repass_label)
                     .addComponent(warn_pass2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -177,7 +177,7 @@ public class okno extends javax.swing.JFrame {
                 .addComponent(repass_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         tabbedPane.addTab("Rejestracja", rejestracja);
@@ -262,16 +262,42 @@ public class okno extends javax.swing.JFrame {
         // if(loginZawiera(".")) login_textfield.setText(login_textfield.getText().replace(".", ""));
     }//GEN-LAST:event_login_textfieldKeyPressed
 
-    boolean checkOtherChars(String text) {
-        for(int i=0; i<text.length(); i++) if(text.charAt(i) <= 'a' && text.charAt(i) >= 'z') return false;
-        return true;
+    int howManyChar(String text, char ch) {
+        int count = 0;
+        for (int i = 0; i < text.length(); i++) count += (text.charAt(i) == ch ? 1 : 0);
+        return count;
+    }
+    
+    boolean badLogin() {
+        String login = login_textfield.getText();
+        boolean error = false;
+        
+        if(!(login.length() > 2 && login.length() < 20)) error = true;
+        else for(int i=0; i<login.length(); i++) if(!((login.charAt(i) >= 'A' && login.charAt(i) <= 'Z') || (login.charAt(i) <= 'z' && login.charAt(i) >= 'a'))) error = true;
+        
+        return error;
+    }
+    
+    boolean badEmail() {
+        String email = email_textfield.getText();
+        boolean error = false;
+        
+        //if(howManyChar(email, '@') > 1 || !email.contains("@")) return true;
+        
+        String[] podzial = new String[2];
+        podzial = email.split("@");
+        login_textfield.setText(podzial[0] + podzial[1]);
+        for(int i=0; i<podzial[0].length(); i++) if(!((email.charAt(i) >= 'A' && email.charAt(i) <= 'z') || email.charAt(i) == '.') && !(email.charAt(i) == ' ')) error = true;
+        if(!podzial[1].contains(".")) return true;
+        if(howManyChar(podzial[1], '.') > 1) return true;
+        for(int i=0; i<podzial[1].length(); i++) if(!((email.charAt(i) >= 'A' && email.charAt(i) <= 'z') || email.charAt(i) == '.') && !(email.charAt(i) == ' ')) error = true;
+        
+        return error;
     }
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        var login = login_textfield.getText();
-        if((login.length() <= 20 && login.length() > 2) && !checkOtherChars(login)) {
-            warn_login.setVisible(false);
-        } else warn_login.setVisible(true);
+        warn_login.setVisible(badLogin());
+        warn_mail.setVisible(badEmail());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
