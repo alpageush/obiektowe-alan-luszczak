@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+import java.io.File;  // Import the File class
+import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.util.Scanner;
 /**
  *
  * @author alpageush
@@ -53,6 +55,8 @@ public class okno extends javax.swing.JFrame {
         email_textfield1 = new javax.swing.JTextField();
         pass_label1 = new javax.swing.JLabel();
         pass_textfield1 = new javax.swing.JPasswordField();
+        jButton2 = new javax.swing.JButton();
+        warn_mail1 = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -87,7 +91,7 @@ public class okno extends javax.swing.JFrame {
 
         warn_login.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         warn_login.setForeground(new java.awt.Color(255, 51, 51));
-        warn_login.setText("! Długość loginu powinna być między 2 a 20");
+        warn_login.setText("! Nieprawidłowy format loginu");
 
         warn_mail.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         warn_mail.setForeground(new java.awt.Color(255, 51, 51));
@@ -95,7 +99,7 @@ public class okno extends javax.swing.JFrame {
 
         warn_pass.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         warn_pass.setForeground(new java.awt.Color(255, 51, 51));
-        warn_pass.setText("! Długość hasła powinna być między 2 a 20");
+        warn_pass.setText("! Nieprawidłowy format hasła");
 
         warn_pass2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         warn_pass2.setForeground(new java.awt.Color(255, 51, 51));
@@ -191,15 +195,23 @@ public class okno extends javax.swing.JFrame {
         pass_label1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         pass_label1.setText("Hasło");
 
+        jButton2.setText("Zaloguj");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        warn_mail1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        warn_mail1.setForeground(new java.awt.Color(255, 51, 51));
+        warn_mail1.setText("! Błędne dane logowania");
+
         javax.swing.GroupLayout logowanieLayout = new javax.swing.GroupLayout(logowanie);
         logowanie.setLayout(logowanieLayout);
         logowanieLayout.setHorizontalGroup(
             logowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(logowanieLayout.createSequentialGroup()
                 .addGroup(logowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(logowanieLayout.createSequentialGroup()
-                        .addGap(144, 144, 144)
-                        .addComponent(rejestracja_label1))
                     .addGroup(logowanieLayout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(logowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -209,7 +221,17 @@ public class okno extends javax.swing.JFrame {
                                 .addGroup(logowanieLayout.createSequentialGroup()
                                     .addGap(1, 1, 1)
                                     .addComponent(pass_label1))
-                                .addComponent(email_label1)))))
+                                .addComponent(email_label1))))
+                    .addGroup(logowanieLayout.createSequentialGroup()
+                        .addGap(204, 204, 204)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(logowanieLayout.createSequentialGroup()
+                        .addGap(144, 144, 144)
+                        .addGroup(logowanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rejestracja_label1)
+                            .addGroup(logowanieLayout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(warn_mail1)))))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         logowanieLayout.setVerticalGroup(
@@ -217,7 +239,9 @@ public class okno extends javax.swing.JFrame {
             .addGroup(logowanieLayout.createSequentialGroup()
                 .addGap(59, 59, 59)
                 .addComponent(rejestracja_label1)
-                .addGap(53, 53, 53)
+                .addGap(18, 18, 18)
+                .addComponent(warn_mail1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
                 .addComponent(email_label1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(email_textfield1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,7 +249,9 @@ public class okno extends javax.swing.JFrame {
                 .addComponent(pass_label1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pass_textfield1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         tabbedPane.addTab("Logowanie", logowanie);
@@ -277,38 +303,75 @@ public class okno extends javax.swing.JFrame {
         
         return error;
     }
-    
+
     boolean badEmail() {
         String email = email_textfield.getText();
-        boolean error = false;
-        
-        //if(howManyChar(email, '@') > 1 || !email.contains("@")) return true;
         
         String[] podzial = new String[2];
+        if(!email.contains("@")) return true;
         podzial = email.split("@");
-        login_textfield.setText(podzial[0] + podzial[1]);
-        for(int i=0; i<podzial[0].length(); i++) if(!((email.charAt(i) >= 'A' && email.charAt(i) <= 'z') || email.charAt(i) == '.') && !(email.charAt(i) == ' ')) error = true;
+        if(email.contains(" ")) return true;
+        for(int i = 0; i < podzial[0].length(); i++) if (!((podzial[0].charAt(i) >= 'A' && podzial[0].charAt(i) <= 'Z') || (podzial[0].charAt(i) <= 'z' && podzial[0].charAt(i) >= 'a'))) return true;
         if(!podzial[1].contains(".")) return true;
         if(howManyChar(podzial[1], '.') > 1) return true;
-        for(int i=0; i<podzial[1].length(); i++) if(!((email.charAt(i) >= 'A' && email.charAt(i) <= 'z') || email.charAt(i) == '.') && !(email.charAt(i) == ' ')) error = true;
+        for(int i = 0; i < podzial[1].length(); i++) if(!((podzial[1].charAt(i) >= 'A' && podzial[1].charAt(i) <= 'Z') || (podzial[1].charAt(i) <= 'z' && podzial[1].charAt(i) >= 'a') || podzial[1].charAt(i) == '.')) return true;
+
+        return false;
+    }
+    
+    boolean badPass() {
+        String pass = pass_textfield.getText();
         
-        return error;
+        if(pass.length() < 4) return true;
+        for(int i=0; i<pass.length(); i++) if (!((pass.charAt(i) >= 'A' && pass.charAt(i) <= 'Z') || (pass.charAt(i) <= 'z' && pass.charAt(i) >= 'a') || (pass.charAt(i) <= '9' && pass.charAt(i) >= '0'))) return true;
+        
+        return false;
+    }
+    
+    boolean badRePass() {
+        String pass = pass_textfield.getText();
+        String repass = repass_textfield.getText();
+        
+        if(!pass.equals(repass)) return true;
+        
+        return false;
     }
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         warn_login.setVisible(badLogin());
         warn_mail.setVisible(badEmail());
+        warn_pass.setVisible(badPass());
+        warn_pass2.setVisible(badRePass());
+        
+        if(!(badLogin() || badEmail() || badPass() || badRePass())) {
+            FileUtils stf = new FileUtils();
+            String text = login_textfield.getText() + "," + email_textfield.getText() + "," + pass_textfield.getText();
+        
+            stf.saveToFile(text);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        FileUtils fu = new FileUtils();
+        String pliczek = fu.readFromFile();
+        
+        String[] plik_podzielony = pliczek.split("\n");
+        
+        for(int i=0; i<plik_podzielony.length; i++) System.out.println(plik_podzielony[i] + "\n");
+        
+        for(int i=0; i<plik_podzielony.length; i++) {
+            String[] kolejny_podzial = plik_podzielony[i].split(",");
+            if(kolejny_podzial[1] == email_textfield1.getText() && kolejny_podzial[2] == pass_textfield1.getText()) System.exit(0);
+        }
+        warn_mail1.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -341,6 +404,7 @@ public class okno extends javax.swing.JFrame {
     private javax.swing.JTextField email_textfield;
     private javax.swing.JTextField email_textfield1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel login_label;
     private javax.swing.JTextField login_textfield;
@@ -357,6 +421,7 @@ public class okno extends javax.swing.JFrame {
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JLabel warn_login;
     private javax.swing.JLabel warn_mail;
+    private javax.swing.JLabel warn_mail1;
     private javax.swing.JLabel warn_pass;
     private javax.swing.JLabel warn_pass2;
     // End of variables declaration//GEN-END:variables
