@@ -24,7 +24,7 @@ public class FileUtils {
             Scanner nadzieja = new Scanner(new File("sekretnehasla.csv"));
             while(nadzieja.hasNextLine()) {
                 String siema = nadzieja.nextLine();
-                ret += siema;
+                ret += siema + "\n";
             }
             nadzieja.close();
         } catch (FileNotFoundException e) {

@@ -355,16 +355,16 @@ public class okno extends javax.swing.JFrame {
         FileUtils fu = new FileUtils();
         String pliczek = fu.readFromFile();
         
-        String[] plik_podzielony = pliczek.split("\n");
+        String[] plik_podzielony = pliczek.split("\n", -1);
         
         for(int i=0; i<plik_podzielony.length; i++) {
             String[] kolejny_podzial = plik_podzielony[i].split(",");
             if(kolejny_podzial[1].equals(email_textfield1.getText()) && kolejny_podzial[2].equals(String.valueOf(pass_textfield1.getPassword()))) {
                 warn_mail1.setText("Prawidłowo zalogowano");
+                return;
             }
-            System.out.println(kolejny_podzial[2] + " == " + String.valueOf(pass_textfield1.getPassword()));
         }
-        //warn_mail1.setText("! Błędne dane logowania");
+        warn_mail1.setText("! Błędne dane logowania");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     
